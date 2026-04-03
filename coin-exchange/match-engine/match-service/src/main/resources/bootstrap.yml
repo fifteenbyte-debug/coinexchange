@@ -1,0 +1,33 @@
+spring:
+  application:
+    name: match-service
+  cloud:
+    nacos:
+      server-addr: 192.168.1.202:8848
+      config:
+        file-extension: yaml
+    stream:
+      bindings:
+        order_in: { destination: order_in, content-type: application/json, group: order-group, consumer.maxAttempts: 1 }
+        trade_plate_out: { destination: trade_plate_out, content-type: application/json }
+        completed_orders_out: { destination: completed_orders_out, content-type: application/json }
+        exchange_trades_out: { destination: exchange_trades_out, content-type: application/json }
+        cancel_order_out: { destination: cancel_order_out, content-type: application/json }
+      rocketmq:
+        binder:
+          name-server: 192.168.1.202:9876
+  profiles:
+    active: dev
+  match:
+    symbols:
+      BTCGCN:
+        coinScale: 8
+        baseCoinScale: 8
+      ETHGCN:
+        coinScale: 8
+        baseCoinScale: 8
+      FOFTGCN:
+        coinScale: 8
+        baseCoinScale: 8
+
+

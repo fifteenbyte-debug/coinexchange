@@ -1,0 +1,117 @@
+package com.fifteen.service.impl;
+
+import cn.hutool.core.collection.CollectionUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.fifteen.domain.SysMenu;
+import com.fifteen.domain.SysPrivilege;
+import com.fifteen.domain.SysRole;
+import com.fifteen.domain.SysRolePrivilege;
+import com.fifteen.model.RolePrivilegesParam;
+import com.fifteen.service.SysMenuService;
+import com.fifteen.service.SysPrivilegeService;
+import com.fifteen.service.SysRolePrivilegeService;
+import com.fifteen.mapper.SysRolePrivilegeMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
+
+/**
+ * @author msc
+ * @description 针对表【sys_role_privilege(角色权限配置)】的数据库操作Service实现
+ * @createDate 2026-03-12 17:29:37
+ */
+@Service
+public class SysRolePrivilegeServiceImpl extends ServiceImpl<SysRolePrivilegeMapper, SysRolePrivilege>
+        implements SysRolePrivilegeService {
+
+    @Autowired
+    private SysMenuService sysMenuService;
+
+    @Autowired
+    private SysPrivilegeService sysPrivilegeService;
+
+    @Autowired
+    private SysRolePrivilegeService sysRolePrivilegeService;
+
+    @Override
+    public List<SysMenu> findSysMenuAndPrivileges(Long roleId) {
+        List<SysMenu> list = sysMenuService.list(); // 查询所有的菜单
+        // 我们在页面显示的是二级菜单,以及二级菜单包含的权限
+        if (CollectionUtil.isEmpty(list)) {
+            return Collections.emptyList();
+        }
+        List<SysMenu> rootMenus = list.stream()
+                .filter(sysMenu -> sysMenu.getParentId() == null)
+                .collect(Collectors.toList());
+        if (CollectionUtil.isEmpty(rootMenus)) {
+            return Collections.emptyList();
+        }
+        // 查询所有的二级菜单
+        List<SysMenu> subMenus = new ArrayList<>();
+        for (SysMenu rootMenu : rootMenus) {
+            subMenus.addAll(getChildMenus(rootMenu.getId(), roleId, list));
+        }
+        return subMenus;
+    }
+
+    /**
+     * 给角色授权权限
+     *
+     * @param rolePrivilegesParam
+     * @return
+     */
+    @Transactional
+    @Override
+    public boolean grantPrivileges(RolePrivilegesParam rolePrivilegesParam) {
+        Long roleId = rolePrivilegesParam.getRoleId(); // 角色Id
+        //1 先删除之前该角色的权限
+        sysRolePrivilegeService.remove(new LambdaQueryWrapper<SysRolePrivilege>().eq(SysRolePrivilege::getRoleId, roleId));
+        // 移除之前的值成功
+        List<Long> privilegeIds = rolePrivilegesParam.getPrivilegeIds();
+        if (!CollectionUtil.isEmpty(privilegeIds)) {
+            List<SysRolePrivilege> sysRolePrivileges = new ArrayList<>();
+            for (Long privilegeId : privilegeIds) {
+                SysRolePrivilege sysRolePrivilege = new SysRolePrivilege();
+                sysRolePrivilege.setRoleId(rolePrivilegesParam.getRoleId());
+                sysRolePrivilege.setPrivilegeId(privilegeId);
+                sysRolePrivileges.add(sysRolePrivilege);
+            }
+            // 2 新增新的值
+            boolean b = sysRolePrivilegeService.saveBatch(sysRolePrivileges);
+            return b;
+        }
+        // 2 新增该角色的权限
+        return true ;
+    }
+
+    /**
+     * 查询菜单的子菜单 (递归)
+     *
+     * @param parentId 父菜单的ID
+     * @param roleId   当前查询的角色的ID
+     * @return
+     */
+    private List<SysMenu> getChildMenus(Long parentId, Long roleId, List<SysMenu> sources) {
+        List<SysMenu> childs = new ArrayList<>();
+        for (SysMenu source : sources) {
+            if (source.getParentId() == parentId) { // 找儿子
+                childs.add(source);
+                source.setChilds(getChildMenus(source.getId(), roleId, sources)); // 给该儿子设置儿子
+                List<SysPrivilege> sysPrivileges = sysPrivilegeService.getAllSysPrivileges(source.getId(), roleId);
+                source.setPrivileges(sysPrivileges); // 该儿子可能包含权限
+            }
+        }
+        return childs;
+    }
+}
+
+
+
+

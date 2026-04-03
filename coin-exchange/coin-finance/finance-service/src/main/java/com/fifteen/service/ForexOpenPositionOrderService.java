@@ -1,0 +1,13 @@
+package com.fifteen.service;
+
+import com.fifteen.domain.ForexOpenPositionOrder;
+import com.baomidou.mybatisplus.extension.service.IService;
+
+/**
+* @author msc
+* @description 针对表【forex_open_position_order(开仓订单信息)】的数据库操作Service
+* @createDate 2026-03-24 10:59:51
+*/
+public interface ForexOpenPositionOrderService extends IService<ForexOpenPositionOrder> {
+
+}

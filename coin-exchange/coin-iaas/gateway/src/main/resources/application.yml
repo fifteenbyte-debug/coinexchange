@@ -1,0 +1,61 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: gateway-server
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.1.202:8848  #修改本机的host文件
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      routes:
+        - id: admin-service_router
+          uri: lb://admin-service #转发到哪个目的地
+          predicates:
+            - Path=/admin/**
+          filters:
+            - StripPrefix=1  # 转发前剥离掉 1 层前缀，即把 /admin 删掉
+        - id: member-service_router
+          uri: lb://member-service #转发到哪个目的地
+          predicates:
+            - Path=/user/**
+          filters:
+            - StripPrefix=1  # 转发前剥离掉 1 层前缀，即把 /user 删掉
+        - id: finance-service_router
+          uri: lb://finance-service #转发到哪个目的地
+          predicates:
+            - Path=/finance/**
+          filters:
+            - StripPrefix=1  # 转发前剥离掉 1 层前缀，即把 /finance 删掉
+        - id: exchange-service_router
+          uri: lb://exchange-service #转发到哪个目的地
+          predicates:
+            - Path=/exchange/**
+          filters:
+            - StripPrefix=1  # 转发前剥离掉 1 层前缀，即把 /exchange 删掉
+        - id: test_router
+          uri: http://www.baidu.com
+          predicates:
+            - Path=/test
+          filters:
+            - StripPrefix=1  # 转发前剥离掉 1 层前缀，即把 /test 删掉
+    sentinel:
+      transport:
+        dashboard: 192.168.1.202:8858
+      datasource:
+        ds1.nacos:
+          serverAddr: 192.168.1.202:8848
+          dataId: gw-flow
+          ruleType: gw_flow
+        ds2.nacos:
+          serverAddr: 192.168.1.202:8848
+          dataId: api-group
+          ruleType: gw_api_group
+  redis:
+    host: 192.168.1.202
+    port: 6379
+

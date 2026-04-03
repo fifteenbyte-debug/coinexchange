@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fifteen.mapper.MarketMapper">
+
+    <resultMap id="BaseResultMap" type="com.fifteen.domain.Market">
+            <id property="id" column="id" />
+            <result property="type" column="type" />
+            <result property="tradeAreaId" column="trade_area_id" />
+            <result property="sellCoinId" column="sell_coin_id" />
+            <result property="buyCoinId" column="buy_coin_id" />
+            <result property="symbol" column="symbol" />
+            <result property="name" column="name" />
+            <result property="title" column="title" />
+            <result property="img" column="img" />
+            <result property="openPrice" column="open_price" />
+            <result property="feeBuy" column="fee_buy" />
+            <result property="feeSell" column="fee_sell" />
+            <result property="marginRate" column="margin_rate" />
+            <result property="numMin" column="num_min" />
+            <result property="numMax" column="num_max" />
+            <result property="tradeMin" column="trade_min" />
+            <result property="tradeMax" column="trade_max" />
+            <result property="priceScale" column="price_scale" />
+            <result property="numScale" column="num_scale" />
+            <result property="contractUnit" column="contract_unit" />
+            <result property="pointValue" column="point_value" />
+            <result property="mergeDepth" column="merge_depth" />
+            <result property="tradeTime" column="trade_time" />
+            <result property="tradeWeek" column="trade_week" />
+            <result property="sort" column="sort" />
+            <result property="status" column="status" />
+            <result property="fxcmSymbol" column="fxcm_symbol" />
+            <result property="yahooSymbol" column="yahoo_symbol" />
+            <result property="aliyunSymbol" column="aliyun_symbol" />
+            <result property="lastUpdateTime" column="last_update_time" />
+            <result property="created" column="created" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,type,trade_area_id,sell_coin_id,buy_coin_id,symbol,
+        name,title,img,open_price,fee_buy,
+        fee_sell,margin_rate,num_min,num_max,trade_min,
+        trade_max,price_scale,num_scale,contract_unit,point_value,
+        merge_depth,trade_time,trade_week,sort,status,
+        fxcm_symbol,yahoo_symbol,aliyun_symbol,last_update_time,created
+    </sql>
+</mapper>

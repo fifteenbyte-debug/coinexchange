@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fifteen.mapper.TurnoverRecordMapper">
+
+    <resultMap id="BaseResultMap" type="com.fifteen.domain.TurnoverRecord">
+            <id property="id" column="id" />
+            <result property="marketId" column="market_id" />
+            <result property="price" column="price" />
+            <result property="volume" column="volume" />
+            <result property="created" column="created" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,market_id,price,volume,created
+    </sql>
+</mapper>

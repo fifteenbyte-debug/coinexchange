@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fifteen.mapper.TurnoverOrderMapper">
+
+    <resultMap id="BaseResultMap" type="com.fifteen.domain.TurnoverOrder">
+            <id property="id" column="id" />
+            <result property="marketId" column="market_id" />
+            <result property="marketType" column="market_type" />
+            <result property="tradeType" column="trade_type" />
+            <result property="symbol" column="symbol" />
+            <result property="marketName" column="market_name" />
+            <result property="sellUserId" column="sell_user_id" />
+            <result property="sellCoinId" column="sell_coin_id" />
+            <result property="sellOrderId" column="sell_order_id" />
+            <result property="sellPrice" column="sell_price" />
+            <result property="sellFeeRate" column="sell_fee_rate" />
+            <result property="sellVolume" column="sell_volume" />
+            <result property="buyUserId" column="buy_user_id" />
+            <result property="buyCoinId" column="buy_coin_id" />
+            <result property="buyOrderId" column="buy_order_id" />
+            <result property="buyVolume" column="buy_volume" />
+            <result property="buyPrice" column="buy_price" />
+            <result property="buyFeeRate" column="buy_fee_rate" />
+            <result property="orderId" column="order_id" />
+            <result property="amount" column="amount" />
+            <result property="price" column="price" />
+            <result property="volume" column="volume" />
+            <result property="dealSellFee" column="deal_sell_fee" />
+            <result property="dealSellFeeRate" column="deal_sell_fee_rate" />
+            <result property="dealBuyFee" column="deal_buy_fee" />
+            <result property="dealBuyFeeRate" column="deal_buy_fee_rate" />
+            <result property="status" column="status" />
+            <result property="lastUpdateTime" column="last_update_time" />
+            <result property="created" column="created" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,market_id,market_type,trade_type,symbol,market_name,
+        sell_user_id,sell_coin_id,sell_order_id,sell_price,sell_fee_rate,
+        sell_volume,buy_user_id,buy_coin_id,buy_order_id,buy_volume,
+        buy_price,buy_fee_rate,order_id,amount,price,
+        volume,deal_sell_fee,deal_sell_fee_rate,deal_buy_fee,deal_buy_fee_rate,
+        status,last_update_time,created
+    </sql>
+</mapper>

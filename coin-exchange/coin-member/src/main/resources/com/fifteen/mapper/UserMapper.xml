@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fifteen.mapper.UserMapper">
+
+    <resultMap id="BaseResultMap" type="com.fifteen.domain.User">
+            <id property="id" column="id" />
+            <result property="type" column="type" />
+            <result property="username" column="username" />
+            <result property="countryCode" column="country_code" />
+            <result property="mobile" column="mobile" />
+            <result property="password" column="password" />
+            <result property="paypassword" column="paypassword" />
+            <result property="paypassSetting" column="paypass_setting" />
+            <result property="email" column="email" />
+            <result property="realName" column="real_name" />
+            <result property="idCardType" column="id_card_type" />
+            <result property="authStatus" column="auth_status" />
+            <result property="gaSecret" column="ga_secret" />
+            <result property="gaStatus" column="ga_status" />
+            <result property="idCard" column="id_card" />
+            <result property="level" column="level" />
+            <result property="authtime" column="authtime" />
+            <result property="logins" column="logins" />
+            <result property="status" column="status" />
+            <result property="inviteCode" column="invite_code" />
+            <result property="inviteRelation" column="invite_relation" />
+            <result property="directInviteid" column="direct_inviteid" />
+            <result property="isDeductible" column="is_deductible" />
+            <result property="reviewsStatus" column="reviews_status" />
+            <result property="agentNote" column="agent_note" />
+            <result property="accessKeyId" column="access_key_id" />
+            <result property="accessKeySecret" column="access_key_secret" />
+            <result property="refeAuthId" column="refe_auth_id" />
+            <result property="lastUpdateTime" column="last_update_time" />
+            <result property="created" column="created" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,type,username,country_code,mobile,password,
+        paypassword,paypass_setting,email,real_name,id_card_type,
+        auth_status,ga_secret,ga_status,id_card,level,
+        authtime,logins,status,invite_code,invite_relation,
+        direct_inviteid,is_deductible,reviews_status,agent_note,access_key_id,
+        access_key_secret,refe_auth_id,last_update_time,created
+    </sql>
+</mapper>

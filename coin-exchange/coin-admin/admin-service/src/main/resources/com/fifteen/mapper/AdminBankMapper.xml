@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fifteen.mapper.AdminBankMapper">
+
+    <resultMap id="BaseResultMap" type="com.fifteen.domain.AdminBank">
+            <id property="id" column="id" />
+            <result property="name" column="name" />
+            <result property="bankName" column="bank_name" />
+            <result property="bankCard" column="bank_card" />
+            <result property="coinId" column="coin_id" />
+            <result property="coinName" column="coin_name" />
+            <result property="status" column="status" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,name,bank_name,bank_card,coin_id,coin_name,
+        status
+    </sql>
+</mapper>
